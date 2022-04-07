@@ -25,6 +25,7 @@ module.exports = function () {
     // app.use(express.static(constant.assetsDir));
 
     require('../src/app/User/userRoute')(app);
+    require('../src/app/Article/articleRoute')(app);
 
     return app;
 }

@@ -5,4 +5,5 @@ module.exports = function (app) {
 
     //test
     app.get('/app/test', user.getTest);
+
 };

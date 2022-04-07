@@ -16,6 +16,19 @@ exports.getArticleByKindId = async function (req, res) {
 
     return res.send(ArticleByKindIdResponse);
 
+};
 
+
+exports.getArticlePopularByKindId = async function (req, res) {
+
+    const kindId = req.params.kindId;
+
+    if(!kindId) return res.send(response(baseResponse.ARTICLE_KINDID_EMPTY));
+
+    if(kindId < 1 || kindId > 4) return res.send(response(baseResponse.ARTICLE_KINDID_NOT_EXIST));
+    const ArticleByKindIdResponse = await articleProvider.retrieveArticlePopularByKindId(kindId);
+
+    return res.send(ArticleByKindIdResponse);
 
 };
+

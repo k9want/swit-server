@@ -1,17 +1,40 @@
 
 async function selectArticleByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
-                                   A.title,
-                                   count(distinct(C.id)) as commentCount,
-                                   count(distinct(LA.userId)) as likeCount,
-                                   count(distinct(V.userId)) as viewCount
-                                 from Article as A
-                                        left join Comment C on A.id = C.articleId
-                                        left join LikedArticle LA on A.id = LA.articleId
-                                        left join View V on A.id = V.articleId
-                                 where A.status = 'ACTIVE' and A.categoryId = ?
-                                 group by A.id
-                                 order by A.createdAt desc;`;
+                                              a.title,
+                                              count(distinct(c.id)) as commentCount,
+                                              count(distinct(la.userId)) as likeCount,
+                                              count(distinct(v.userId)) as viewCount,
+                                              a.status,
+                                              a.createdAt
+                                            from Article as a
+                                                   left join Comment c on a.id = c.articleId
+                                                   left join LikedArticle la on a.id = la.articleId
+                                                   left join View v on a.id = v.articleId
+                                            where a.status != 'INACTIVE' and a.categoryId = ?
+                                            group by a.id
+                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;`;
+    const [selectArticleByKindIdList] = await connection.query(selectArticleByKindIdListQuery, [kindId]);
+    return selectArticleByKindIdList;
+}
+
+
+
+async function selectArticlePopularByKindId(connection, kindId) {
+    const selectArticleByKindIdListQuery = `select
+                                              a.title,
+                                              count(distinct(c.id)) as commentCount,
+                                              count(distinct(la.userId)) as likeCount,
+                                              count(distinct(v.userId)) as viewCount,
+                                              a.status,
+                                              a.createdAt
+                                            from Article as a
+                                                   left join Comment c on a.id = c.articleId
+                                                   left join LikedArticle la on a.id = la.articleId
+                                                   left join View v on a.id = v.articleId
+                                            where a.status != 'INACTIVE' and a.categoryId = ?
+                                            group by a.id
+                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), viewCount desc;`;
     const [selectArticleByKindIdList] = await connection.query(selectArticleByKindIdListQuery, [kindId]);
     return selectArticleByKindIdList;
 }
@@ -19,6 +42,9 @@ async function selectArticleByKindId(connection, kindId) {
 
 
 
+
 module.exports = {
-    selectArticleByKindId
+    selectArticleByKindId,
+    selectArticlePopularByKindId
+
 };

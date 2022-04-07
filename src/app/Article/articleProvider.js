@@ -16,5 +16,20 @@ exports.retrieveArticleByKindId = async function (kindId) {
 
     connection.release();
 
-    return response(baseResponse.SUCCESS, articleByKindIdResult)
+    return response(baseResponse.ARTICLE_BY_KINDID_SUCCESS, articleByKindIdResult)
 };
+
+exports.retrieveArticlePopularByKindId = async function (kindId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const articlePopularByKindIdResult = await articleDao.selectArticlePopularByKindId(connection, kindId);
+
+    if (articlePopularByKindIdResult.length < 1) {
+        connection.release();
+        return response(baseResponse.ARTICLEBYKINDID_NOT_EXIST)
+    }
+
+    connection.release();
+
+    return response(baseResponse.ARTICLE_POPULAR_BY_KINDID_SUCCESS, articlePopularByKindIdResult)
+};
+

@@ -26,3 +26,28 @@ exports.getLikeArticleByUserId = async function (req, res) {
 
     return res.send(userLikeArticleByUseridResult)
 };
+
+
+
+/**
+ * API No. 13
+ * API Name : 내 관심글 삭제
+ * [PATCH] /users/:userId/likes/:articleId/status
+ */
+exports.patchLikeArticleStatusByUserId = async function (req, res) {
+    const userId = req.params.userId;
+    const articleId = req.params.articleId;
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+
+    const userLikeArticleStatusByUseridResult = await userService.editLikeArticleStatusByUserId(userId, articleId);
+    // console.log(userLikeArticleStatusByUseridResult)
+    return res.send(userLikeArticleStatusByUseridResult)
+};

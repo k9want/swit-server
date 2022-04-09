@@ -9,3 +9,4 @@
 
 /config/database.js
 /config/jwtMiddleware.js
+/config/secret.js

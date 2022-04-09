@@ -22,6 +22,38 @@ async function selectLikeArticleByUserId(connection, userId) {
 
 
 
+// 6-1 카카오로그인 우선 유저가 회원인지 체크
+async function selectUserByKakaoIdCheck(connection, kakaoId) {
+    const selectUserByKakaoIdQuery= `select
+                                       id,
+                                       kakaoId
+                                     from User as u
+                                     where u.status = 'ACTIVE' and u.kakaoId = ?;`
+
+    const [selectUserByKakaoIdRows] = await connection.query(selectUserByKakaoIdQuery, kakaoId)
+
+    // console.log(selectUserByKakaoIdRows)
+    // console.log(selectUserByKakaoIdRows[0])
+
+    return selectUserByKakaoIdRows[0]
+}
+
+// 6-2 회원가입 (카카오)
+async function insertUserByKakaoId(connection, createUserByKakaoIdParams) {
+    const insertUserByKakaoIdQuery= `INSERT INTO
+                                       User (kakaoId, nickname)
+                                     VALUES (?, ?);`
+
+    const [insertUserByKakaoIdRows] = await connection.query(insertUserByKakaoIdQuery, createUserByKakaoIdParams)
+
+    // console.log(insertUserByKakaoIdRows)
+    // console.log(insertUserByKakaoIdRows.insertId)
+
+    return insertUserByKakaoIdRows.insertId
+}
+
+
+
 //13.
 // 13-1 내 관심글 삭제하기 전에 관심글아이디가져오기(관심게시글이 있는지 확인하기 위해)
 async function selectLikeArticleCheck(connection, userLikeArticleCheckParams) {
@@ -51,6 +83,12 @@ async function updateLikeArticleStatus(connection, likeArticleId) {
 
 module.exports = {
     selectLikeArticleByUserId,
+
+
+    //6-1 유저 회원인지 체크
+    selectUserByKakaoIdCheck,
+    //6-2 회원이 아닐경우 회원가입
+    insertUserByKakaoId,
 
     //13
     selectLikeArticleCheck,

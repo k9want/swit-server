@@ -5,6 +5,34 @@ const userDao = require('./userDao');
 const baseResponse = require('../../../config/baseResponseStatus');
 const {response, errResponse} = require("../../../config/response");
 
+
+
+//6-2 카카오로그인 (회원가입)
+exports.createUserByKakaoId = async function (kakaoId, kakaoNickname) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        const createUserByKakaoIdParams = [kakaoId, kakaoNickname]
+
+        const userInsertId = await userDao.insertUserByKakaoId(connection, createUserByKakaoIdParams)
+
+        await connection.commit()
+        return userInsertId;
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};
+
+
+
+
+
 //13. 내 관심글 삭제
 exports.editLikeArticleStatusByUserId = async function (userId, articleId) {
     const connection = await pool.getConnection(async (conn) => conn);

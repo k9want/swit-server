@@ -3,6 +3,7 @@ module.exports = {
     //1***
     // Success
     SUCCESS: { "isSuccess": true, "code": 1000, "message": '성공' },
+    KAKAO_SIGNIN_SUCCESS:  { "isSuccess": true, "code": 1001, "message": '카카오소셜로그인 성공' },
     ARTICLE_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1100, "message": '게시글 조회(KindId로)성공'},
     ARTICLE_POPULAR_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1101, "message": '인기게시글 조회(KindId로)성공'},
     ARTICLEBYKINDID_NOT_EXIST : { "isSuccess": true, "code": 1102, "message": "게시글이 존재하지 않습니다." },
@@ -17,10 +18,12 @@ module.exports = {
     USER_USERID_EMPTY: { "isSuccess": false, "code": 2000, "message": '유저Id를 입력하세요.' },
     ARTICLE_ARTICLEID_EMPTY: { "isSuccess": false, "code": 2001, "message": 'articleId를 입력하세요.' },
 
+
     KAKAOLOGIN_RETRY : { "isSuccess": false, code: 2002, "message": '카카오로그인 다시 시도해주세요' },
     ACCESS_CODE : { "isSuccess": false, "code": 2003, "message": "유효하지 않은 인가코드입니다." },
     ACCESS_TOKEN : { "isSuccess": false, "code": 2004, "message": "유효하지 않은 액세스토큰입니다" },
-
+    USER_TOKEN_EMPTY : { "isSuccess": false, "code": 2005, "message": 'JWT토큰을 입력해주세요' },
+    USER_TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 2006, "message": 'JWT토큰 검증 실패' },
 
 
     // Article Response

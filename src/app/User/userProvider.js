@@ -5,6 +5,24 @@ const userDao = require('./userDao');
 const {response} = require("../../../config/response");
 
 
+/**
+ * API No. 6-1
+ * API Name : 회원인지 아닌지 조회(kakaoId)
+ * [GET] / /auth/kakao/callback
+ */
+
+exports.checkUserBykakaoId = async function (kakaoId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+
+    const userByKakaoIdResult = await userDao.selectUserByKakaoIdCheck(connection, kakaoId)
+
+    connection.release();
+    // console.log(userByKakaoIdResult)
+    return userByKakaoIdResult
+};
+
+
+
 
 /**
  * API No. 11
@@ -15,14 +33,14 @@ const {response} = require("../../../config/response");
 exports.retrieveLikeArticleByUserId = async function (userId) {
     const connection = await pool.getConnection(async (conn) => conn);
 
-    const LikeArticleByUserIdResult = await userDao.selectLikeArticleByUserId(connection, userId)
+    const likeArticleByUserIdResult = await userDao.selectLikeArticleByUserId(connection, userId)
 
-    if (LikeArticleByUserIdResult.length < 1) {
+    if (likeArticleByUserIdResult.length < 1) {
         connection.release();
         return response(baseResponse.LIKEARTICLE_NOT_EXIST)
     }
 
     connection.release();
-    return response(baseResponse.LIKEARTICLE_BY_USERID_SUCCESS, LikeArticleByUserIdResult)
+    return response(baseResponse.LIKEARTICLE_BY_USERID_SUCCESS, likeArticleByUserIdResult)
 
 };

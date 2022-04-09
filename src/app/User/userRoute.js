@@ -9,8 +9,8 @@ module.exports = function (app) {
     app.get('/kakao-login', user.kakaoCallback);
 
     //11. 내 관심글 조회
-    app.get('/users/:userId/likes', user.getLikeArticleByUserId)
+    app.get('/users/:userId/likes', jwtMiddleware, user.getLikeArticleByUserId)
 
     //13. 내 관심글 삭제
-    app.patch('/users/:userId/likes/:articleId/status', user.patchLikeArticleStatusByUserId)
+    app.patch('/users/:userId/likes/:articleId/status', jwtMiddleware, user.patchLikeArticleStatusByUserId)
 };

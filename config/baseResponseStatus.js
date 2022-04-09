@@ -16,14 +16,15 @@ module.exports = {
     //2*** - Request error
     // User Response
     USER_USERID_EMPTY: { "isSuccess": false, "code": 2000, "message": '유저Id를 입력하세요.' },
-    ARTICLE_ARTICLEID_EMPTY: { "isSuccess": false, "code": 2001, "message": 'articleId를 입력하세요.' },
+    USER_ID_NOT_MATCH: { "isSuccess": false, "code": 2001, "message": '유저Id랑 jwt.id랑 값이 다릅니다.' },
+    ARTICLE_ARTICLEID_EMPTY: { "isSuccess": false, "code": 2003, "message": 'articleId를 입력하세요.' },
+    USER_TOKEN_EMPTY : { "isSuccess": false, "code": 2004, "message": 'JWT토큰을 입력해주세요' },
+    USER_TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 2005, "message": 'JWT토큰 검증 실패' },
 
 
-    KAKAOLOGIN_RETRY : { "isSuccess": false, code: 2002, "message": '카카오로그인 다시 시도해주세요' },
-    ACCESS_CODE : { "isSuccess": false, "code": 2003, "message": "유효하지 않은 인가코드입니다." },
-    ACCESS_TOKEN : { "isSuccess": false, "code": 2004, "message": "유효하지 않은 액세스토큰입니다" },
-    USER_TOKEN_EMPTY : { "isSuccess": false, "code": 2005, "message": 'JWT토큰을 입력해주세요' },
-    USER_TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 2006, "message": 'JWT토큰 검증 실패' },
+    KAKAOLOGIN_RETRY : { "isSuccess": false, code: 2011, "message": '카카오로그인 다시 시도해주세요' },
+    ACCESS_CODE : { "isSuccess": false, "code": 2012, "message": "유효하지 않은 인가코드입니다." },
+    ACCESS_TOKEN : { "isSuccess": false, "code": 2013, "message": "유효하지 않은 액세스토큰입니다" },
 
 
     // Article Response

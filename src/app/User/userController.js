@@ -91,10 +91,16 @@ exports.kakaoCallback = async function (req, res) {
  * [GET] /users/:userId/likes
  */
 exports.getLikeArticleByUserId = async function (req, res) {
+
     const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
 
     if (!userId) {
         return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
     }
 
     const userLikeArticleByUseridResult = await userProvider.retrieveLikeArticleByUserId(userId);

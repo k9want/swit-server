@@ -179,6 +179,7 @@ exports.getLikeArticleByUserId = async function (req, res) {
 
 
 
+
 /**
  * API No. 13
  * API Name : 내 관심글 삭제
@@ -200,4 +201,28 @@ exports.patchLikeArticleStatusByUserId = async function (req, res) {
     const userLikeArticleStatusByUseridResult = await userService.editLikeArticleStatusByUserId(userId, articleId);
     // console.log(userLikeArticleStatusByUseridResult)
     return res.send(userLikeArticleStatusByUseridResult)
+};
+
+
+/**
+ * API No. 14
+ * API Name : 내 모집글 조회
+ * [GET] /users/:userId/articles
+ */
+exports.getUserArticleByUserId = async function (req, res) {
+
+    const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    const userArticleByUseridResult = await userProvider.retrieveUserArticleByUserId(userId);
+
+    return res.send(userArticleByUseridResult)
 };

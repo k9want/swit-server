@@ -1,24 +1,3 @@
-async function selectLikeArticleByUserId(connection, userId) {
-    const selectLikeArticleByUserIdQuery = `select
-                                              a.title,
-                                              count(distinct(c.id)) as commentCount,
-                                              count(distinct(la.userId)) as likeCount,
-                                              count(distinct(v.userId)) as viewCount,
-                                              a.status,
-                                              a.createdAt
-                                            from Article as a
-                                                   left join Comment c on a.id = c.articleId
-                                                   left join LikedArticle la on a.id = la.articleId
-                                                   left join View v on a.id = v.articleId
-                                            where a.status != 'INACTIVE' and la.userId = ?
-                                            group by a.id
-                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;
-    `
-
-    const [selectLikeArticleByUserIdRows] = await connection.query(selectLikeArticleByUserIdQuery, userId)
-    return selectLikeArticleByUserIdRows
-
-}
 
 
 
@@ -78,6 +57,30 @@ async function updateUserInfo(connection, editUserInfoData) {
     return updateUserInfoRows[0]
 }
 
+//11. 내 관심글 조회
+async function selectLikeArticleByUserId(connection, userId) {
+    const selectLikeArticleByUserIdQuery = `select
+                                              a.title,
+                                              count(distinct(c.id)) as commentCount,
+                                              count(distinct(la.userId)) as likeCount,
+                                              count(distinct(v.userId)) as viewCount,
+                                              a.status,
+                                              a.createdAt
+                                            from Article as a
+                                                   left join Comment c on a.id = c.articleId
+                                                   left join LikedArticle la on a.id = la.articleId
+                                                   left join View v on a.id = v.articleId
+                                            where a.status != 'INACTIVE' and la.userId = ?
+                                            group by a.id
+                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;
+    `
+
+    const [selectLikeArticleByUserIdRows] = await connection.query(selectLikeArticleByUserIdQuery, userId)
+    return selectLikeArticleByUserIdRows
+
+}
+
+
 
 //13.
 // 13-1 내 관심글 삭제하기 전에 관심글아이디가져오기(관심게시글이 있는지 확인하기 위해)
@@ -105,10 +108,31 @@ async function updateLikeArticleStatus(connection, likeArticleId) {
 
 }
 
+//14. 내 모집글 조회
+async function selectUserArticleByUserId(connection, userId) {
+    const selectUserArticleByUserIdQuery = `select
+                                              a.title,
+                                              count(distinct(c.id)) as commentCount,
+                                              count(distinct(la.userId)) as likeCount,
+                                              count(distinct(v.userId)) as viewCount,
+                                              a.status,
+                                              a.createdAt
+                                            from Article as a
+                                                   left join Comment c on a.id = c.articleId
+                                                   left join LikedArticle la on a.id = la.articleId
+                                                   left join View v on a.id = v.articleId
+                                            where a.status != 'INACTIVE' and a.userId = ?
+                                            group by a.id
+                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;`
+
+    const [selectUserArticleByUserIdRows] = await connection.query(selectUserArticleByUserIdQuery, userId)
+    return selectUserArticleByUserIdRows
+
+}
+
+
 
 module.exports = {
-    selectLikeArticleByUserId,
-
 
     //6-1 유저 회원인지 체크
     selectUserByKakaoIdCheck,
@@ -120,9 +144,15 @@ module.exports = {
 
     //10 내 설정 수정
     updateUserInfo,
+
+    //11. 내 관심글 조회
+    selectLikeArticleByUserId,
+
     //13
     selectLikeArticleCheck,
-    updateLikeArticleStatus
+    updateLikeArticleStatus,
 
+    //14. 내 모집글 조회
+    selectUserArticleByUserId,
 
 }

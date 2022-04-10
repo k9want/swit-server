@@ -13,6 +13,8 @@ module.exports = {
     LIKEARTICLE_NOT_EXIST : { "isSuccess": true, "code": 1104, "message": "관심있는 게시글이 존재하지 않습니다." },
     LIKEARTICLE_BY_USERID_SUCCESS : { "isSuccess": true, "code": 1105, "message": "유저의 관심있는 게시글 조회성공" },
     LIKEARTICLE_PATCH_STATUS_SUCCESS : { "isSuccess": true, "code": 1106, "message": "관심있는 게시글 삭제 성공" },
+    USER_ARTICLE_NOT_EXIST : { "isSuccess": true, "code": 1107, "message": "유저가 작성한 모집글이 존재하지 않습니다." },
+    USER_ARTICLE_BY_USERID_SUCCESS : { "isSuccess": true, "code": 1108, "message": "내 모집글 조회성공" },
 
     //2*** - Request error
     // User Response

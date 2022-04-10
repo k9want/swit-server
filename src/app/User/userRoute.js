@@ -22,4 +22,7 @@ module.exports = function (app) {
 
     //13. 내 관심글 삭제
     app.patch('/users/:userId/likes/:articleId/status', jwtMiddleware, user.patchLikeArticleStatusByUserId)
+
+    //14. 내 모집글 조회
+    app.get('/users/:userId/articles', jwtMiddleware, user.getUserArticleByUserId)
 };

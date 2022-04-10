@@ -61,3 +61,25 @@ exports.retrieveLikeArticleByUserId = async function (userId) {
     return response(baseResponse.LIKEARTICLE_BY_USERID_SUCCESS, likeArticleByUserIdResult)
 
 };
+
+
+
+/**
+ * API No. 14
+ * API Name : 내 모집글 조회
+ * [GET] /users/:userId/articles
+ */
+exports.retrieveUserArticleByUserId = async function (userId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+
+    const userArticleByUserIdResult = await userDao.selectUserArticleByUserId(connection, userId)
+
+    connection.release();
+
+    if (userArticleByUserIdResult.length < 1) {
+        return response(baseResponse.USER_ARTICLE_NOT_EXIST)
+    }
+
+    return response(baseResponse.USER_ARTICLE_BY_USERID_SUCCESS, userArticleByUserIdResult)
+
+};

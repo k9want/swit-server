@@ -4,6 +4,7 @@ module.exports = {
     // Success
     SUCCESS: { "isSuccess": true, "code": 1000, "message": '성공' },
     KAKAO_SIGNIN_SUCCESS:  { "isSuccess": true, "code": 1001, "message": '카카오소셜로그인 성공' },
+    USER_BY_USERID_SUCCESS: { "isSuccess": true, "code": 1002, "message": "내설정 조회 성공" },
     ARTICLE_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1100, "message": '게시글 조회(KindId로)성공'},
     ARTICLE_POPULAR_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1101, "message": '인기게시글 조회(KindId로)성공'},
     ARTICLEBYKINDID_NOT_EXIST : { "isSuccess": true, "code": 1102, "message": "게시글이 존재하지 않습니다." },
@@ -11,7 +12,6 @@ module.exports = {
     LIKEARTICLE_NOT_EXIST : { "isSuccess": true, "code": 1104, "message": "관심있는 게시글이 존재하지 않습니다." },
     LIKEARTICLE_BY_USERID_SUCCESS : { "isSuccess": true, "code": 1105, "message": "유저의 관심있는 게시글 조회성공" },
     LIKEARTICLE_PATCH_STATUS_SUCCESS : { "isSuccess": true, "code": 1106, "message": "관심있는 게시글 삭제 성공" },
-
 
     //2*** - Request error
     // User Response
@@ -34,7 +34,7 @@ module.exports = {
 
     //3*** - Response error
     USER_LIKEARTICLE_BY_USERID_ARTICLEID_EMPTY_FOR_DELETE: {"isSuccess": false, "code": 3001, "message": '삭제할 관심있는 글이 없습니다.'},
-
+    USER_BY_USERID_NOT_EXIST: {"isSuccess": false, "code": 3002, "message": '해당 유저가 존재하지 않습니다.'},
 
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
 };

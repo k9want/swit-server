@@ -53,6 +53,21 @@ async function insertUserByKakaoId(connection, createUserByKakaoIdParams) {
 }
 
 
+// 9 내 설정 조회
+async function selectUserByUserId(connection, userId) {
+    const selectUserByUserIdQuery = `select
+                                       nickname,
+                                       studyKindId
+                                     from User as u
+                                     where u.status = 'ACTIVE' and u.id = ?;`
+
+    const [selectUserByUserIdRows] = await connection.query(selectUserByUserIdQuery, userId);
+
+    return selectUserByUserIdRows[0]
+}
+
+
+
 
 //13.
 // 13-1 내 관심글 삭제하기 전에 관심글아이디가져오기(관심게시글이 있는지 확인하기 위해)
@@ -89,6 +104,9 @@ module.exports = {
     selectUserByKakaoIdCheck,
     //6-2 회원이 아닐경우 회원가입
     insertUserByKakaoId,
+
+    //9 내설정 조회
+    selectUserByUserId,
 
     //13
     selectLikeArticleCheck,

@@ -18,7 +18,24 @@ exports.checkUserBykakaoId = async function (kakaoId) {
 
     connection.release();
     // console.log(userByKakaoIdResult)
-    return userByKakaoIdResult
+    return userByKakaoIdResult;
+};
+
+
+/**
+ * API No. 9
+ * API Name : 내 설정 조회
+ * [GET] /users/:userId
+ */
+
+exports.retrieveUserByUserId = async function (userId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+
+    const userByUserIdResult = await userDao.selectUserByUserId(connection, userId);
+
+    connection.release();
+
+    return userByUserIdResult;
 };
 
 

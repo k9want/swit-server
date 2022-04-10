@@ -6,7 +6,11 @@ module.exports = function (app) {
     //카카오로그인 연습
     // app.get('/kakao-login', user.kakaoLogin);
 
+    //6. 카카오로그인
     app.get('/kakao-login', user.kakaoCallback);
+
+    //9. 내 설정
+    app.get('/users/:userId', jwtMiddleware, user.getUserByUserId)
 
     //11. 내 관심글 조회
     app.get('/users/:userId/likes', jwtMiddleware, user.getLikeArticleByUserId)

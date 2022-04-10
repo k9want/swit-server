@@ -11,6 +11,12 @@ const REST_API_KEY = secret.REST_API_KEY
 const REDIRECT_URI = secret.REDIRECT_URI
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
 
+
+/**
+ * API No. 6
+ * API Name : 카카오소셜로그인
+ * [GET] /kakao-login
+ */
 exports.kakaoCallback = async function (req, res) {
 
     try {
@@ -84,6 +90,35 @@ exports.kakaoCallback = async function (req, res) {
     }
 
 };
+
+
+/**
+ * API No. 9
+ * API Name : 내 설정 조회
+ * [GET] /users/:userId
+ */
+exports.getUserByUserId = async function (req, res) {
+    const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    const userByUserIdResult = await userProvider.retrieveUserByUserId(userId);
+
+    if (!userByUserIdResult) {
+        return res.send(response(baseResponse.USER_BY_USERID_NOT_EXIST))
+    }
+
+    return res.send(response(baseResponse.USER_BY_USERID_SUCCESS,userByUserIdResult))
+};
+
+
 
 /**
  * API No. 11

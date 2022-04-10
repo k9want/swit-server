@@ -5,6 +5,7 @@ module.exports = {
     SUCCESS: { "isSuccess": true, "code": 1000, "message": '성공' },
     KAKAO_SIGNIN_SUCCESS:  { "isSuccess": true, "code": 1001, "message": '카카오소셜로그인 성공' },
     USER_BY_USERID_SUCCESS: { "isSuccess": true, "code": 1002, "message": "내설정 조회 성공" },
+    USERINFO_EDIT_SUCCESS  : { "isSuccess": true, "code": 1003, "message": '내 설정 수정 성공' },
     ARTICLE_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1100, "message": '게시글 조회(KindId로)성공'},
     ARTICLE_POPULAR_BY_KINDID_SUCCESS: {"isSuccess": true, "code": 1101, "message": '인기게시글 조회(KindId로)성공'},
     ARTICLEBYKINDID_NOT_EXIST : { "isSuccess": true, "code": 1102, "message": "게시글이 존재하지 않습니다." },
@@ -20,7 +21,8 @@ module.exports = {
     ARTICLE_ARTICLEID_EMPTY: { "isSuccess": false, "code": 2003, "message": 'articleId를 입력하세요.' },
     USER_TOKEN_EMPTY : { "isSuccess": false, "code": 2004, "message": 'JWT토큰을 입력해주세요' },
     USER_TOKEN_VERIFICATION_FAILURE : { "isSuccess": false, "code": 2005, "message": 'JWT토큰 검증 실패' },
-
+    USER_NICKNAME_EMPTY : { "isSuccess": false, "code": 2006, "message": 'nickname을 입력하세요 ' },
+    USER_STUDYKINDID_EMPTY : { "isSuccess": false, "code": 2007, "message": 'studyKindId를 입력하세요' },
 
     KAKAOLOGIN_RETRY : { "isSuccess": false, code: 2011, "message": '카카오로그인 다시 시도해주세요' },
     ACCESS_CODE : { "isSuccess": false, "code": 2012, "message": "유효하지 않은 인가코드입니다." },

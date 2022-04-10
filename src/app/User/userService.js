@@ -30,6 +30,27 @@ exports.createUserByKakaoId = async function (kakaoId, kakaoNickname) {
 };
 
 
+//10. 내 설정 수정
+exports.editUserInfo = async function (nickname, studyKindId, userId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        const editUserInfoData = [nickname, studyKindId, userId]
+        const editUserInfoResult = await userDao.updateUserInfo(connection, editUserInfoData)
+
+        await connection.commit()
+        return response(baseResponse.USERINFO_EDIT_SUCCESS);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};
+
 
 
 

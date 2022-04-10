@@ -1,3 +1,5 @@
+const jwtMiddleware = require("../../../config/jwtMiddleware");
+const user = require("../../app/User/userController");
 module.exports = function (app) {
     const user = require('../../app/User/userController');
     const jwtMiddleware = require('../../../config/jwtMiddleware');
@@ -11,6 +13,9 @@ module.exports = function (app) {
 
     //9. 내 설정
     app.get('/users/:userId', jwtMiddleware, user.getUserByUserId)
+
+    //10. 내 설정 수정
+    app.patch('/users/:userId', jwtMiddleware, user.patchUserInfo)
 
     //11. 내 관심글 조회
     app.get('/users/:userId/likes', jwtMiddleware, user.getLikeArticleByUserId)

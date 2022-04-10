@@ -121,6 +121,39 @@ exports.getUserByUserId = async function (req, res) {
 
 
 /**
+ * API No. 10
+ * API Name : 내 설정 수정
+ * [PATCH] /users/:userId
+ */
+exports.patchUserInfo = async function (req, res) {
+    const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
+    const { nickname, studyKindId } = req.body
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    if (!nickname) {
+        return res.send(response(baseResponse.USER_NICKNAME_EMPTY));
+    }
+
+    if (!studyKindId) {
+        return res.send(response(baseResponse.USER_STUDYKINDID_EMPTY));
+    }
+
+    const edituserByUserIdResult = await userService.editUserInfo(nickname, studyKindId, userId);
+
+    return res.send(edituserByUserIdResult)
+};
+
+
+
+/**
  * API No. 11
  * API Name : 내 관심글 조회
  * [GET] /users/:userId/likes

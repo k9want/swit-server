@@ -66,7 +66,17 @@ async function selectUserByUserId(connection, userId) {
     return selectUserByUserIdRows[0]
 }
 
+//10. 내 설정 수정
+async function updateUserInfo(connection, editUserInfoData) {
+    const updateUserInfoQuery = `UPDATE
+                                   User as u
+                                 SET u.nickname = ?, u.studyKindId = ?
+                                 WHERE u.id = ? and u.status = 'ACTIVE';`
 
+    const [updateUserInfoRows] = await connection.query(updateUserInfoQuery, editUserInfoData);
+
+    return updateUserInfoRows[0]
+}
 
 
 //13.
@@ -105,9 +115,11 @@ module.exports = {
     //6-2 회원이 아닐경우 회원가입
     insertUserByKakaoId,
 
-    //9 내설정 조회
+    //9 내 설정 조회
     selectUserByUserId,
 
+    //10 내 설정 수정
+    updateUserInfo,
     //13
     selectLikeArticleCheck,
     updateLikeArticleStatus

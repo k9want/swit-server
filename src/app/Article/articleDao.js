@@ -1,6 +1,7 @@
 //2. 게시글 조회 (종류) - 최신순
 async function selectArticleByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
+                                              a.id as articleId,
                                               a.title,
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,
@@ -22,6 +23,7 @@ async function selectArticleByKindId(connection, kindId) {
 //4. 게시글 조회 (종류) - 인기순
 async function selectArticlePopularByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
+                                              a.id as articleId,
                                               a.title,
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,

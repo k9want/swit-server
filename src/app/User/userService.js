@@ -37,7 +37,7 @@ exports.editUserInfo = async function (nickname, studyKindId, userId) {
         await connection.beginTransaction();
 
         const editUserInfoData = [nickname, studyKindId, userId]
-        const editUserInfoResult = await userDao.updateUserInfo(connection, editUserInfoData)
+        await userDao.updateUserInfo(connection, editUserInfoData)
 
         await connection.commit()
         return response(baseResponse.USERINFO_EDIT_SUCCESS);

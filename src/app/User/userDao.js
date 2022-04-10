@@ -64,16 +64,15 @@ async function selectLikeArticleByUserId(connection, userId) {
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,
                                               count(distinct(v.userId)) as viewCount,
-                                              a.status,
-                                              a.createdAt
+                                              date_format(a.createdAt, '%Y.%m.%d') as createAt,
+                                              a.status
                                             from Article as a
                                                    left join Comment c on a.id = c.articleId
                                                    left join LikedArticle la on a.id = la.articleId
                                                    left join View v on a.id = v.articleId
                                             where a.status != 'INACTIVE' and la.userId = ?
                                             group by a.id
-                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;
-    `
+                                            order by (case when a.status = 'ACTIVE' then 1 else 2 end), a.createdAt desc;`
 
     const [selectLikeArticleByUserIdRows] = await connection.query(selectLikeArticleByUserIdQuery, userId)
     return selectLikeArticleByUserIdRows
@@ -115,8 +114,8 @@ async function selectUserArticleByUserId(connection, userId) {
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,
                                               count(distinct(v.userId)) as viewCount,
-                                              a.status,
-                                              a.createdAt
+                                              date_format(a.createdAt, '%Y.%m.%d') as createAt,
+                                              a.status
                                             from Article as a
                                                    left join Comment c on a.id = c.articleId
                                                    left join LikedArticle la on a.id = la.articleId

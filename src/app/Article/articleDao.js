@@ -1,12 +1,12 @@
-
+//2. 게시글 조회 (종류) - 최신순
 async function selectArticleByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
                                               a.title,
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,
                                               count(distinct(v.userId)) as viewCount,
-                                              a.status,
-                                              a.createdAt
+                                              date_format(a.createdAt, '%Y.%m.%d') as createAt,
+                                              a.status
                                             from Article as a
                                                    left join Comment c on a.id = c.articleId
                                                    left join LikedArticle la on a.id = la.articleId
@@ -19,15 +19,15 @@ async function selectArticleByKindId(connection, kindId) {
 }
 
 
-
+//4. 게시글 조회 (종류) - 인기순
 async function selectArticlePopularByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
                                               a.title,
                                               count(distinct(c.id)) as commentCount,
                                               count(distinct(la.userId)) as likeCount,
                                               count(distinct(v.userId)) as viewCount,
-                                              a.status,
-                                              a.createdAt
+                                              date_format(a.createdAt, '%Y.%m.%d') as createAt,
+                                              a.status
                                             from Article as a
                                                    left join Comment c on a.id = c.articleId
                                                    left join LikedArticle la on a.id = la.articleId
@@ -44,7 +44,11 @@ async function selectArticlePopularByKindId(connection, kindId) {
 
 
 module.exports = {
+
+    //2. 게시글 조회(최신순)
     selectArticleByKindId,
+
+    //4. 게시글 조회(인기순)
     selectArticlePopularByKindId
 
 };

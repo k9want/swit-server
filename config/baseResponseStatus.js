@@ -15,6 +15,7 @@ module.exports = {
     LIKEARTICLE_PATCH_STATUS_SUCCESS : { "isSuccess": true, "code": 1106, "message": "관심있는 게시글 삭제 성공" },
     USER_ARTICLE_NOT_EXIST : { "isSuccess": true, "code": 1107, "message": "유저가 작성한 모집글이 존재하지 않습니다." },
     USER_ARTICLE_BY_USERID_SUCCESS : { "isSuccess": true, "code": 1108, "message": "내 모집글 조회성공" },
+    ARTICLE_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1109, "message": "모집글 상세조회 성공" },
 
     //2*** - Request error
     // User Response
@@ -36,9 +37,15 @@ module.exports = {
     ARTICLE_KINDID_NOT_EXIST: {"isSuccess": false, "code": 2101, "message":'ArticleKindId를 확인해주세요'},
 
 
+
+
     //3*** - Response error
     USER_LIKEARTICLE_BY_USERID_ARTICLEID_EMPTY_FOR_DELETE: {"isSuccess": false, "code": 3001, "message": '삭제할 관심있는 글이 없습니다.'},
     USER_BY_USERID_NOT_EXIST: {"isSuccess": false, "code": 3002, "message": '해당 유저가 존재하지 않습니다.'},
+    ARTICLE_BY_ARTICLEID_WRONG: {"isSuccess": false, "code": 3002, "message": '해당 유저가 존재하지 않습니다.'},
+    ARTICLE_BY_ARTICLEID_NOT_EXIST: {"isSuccess": false, "code": 3003, "message":'해당 articleId로 조회되는 모집글이 없습니다.(상세조회 실패)'},
 
+
+    //4 ******
     DB_ERROR : { "isSuccess": false, "code": 4000, "message": "데이터 베이스 에러"},
 };

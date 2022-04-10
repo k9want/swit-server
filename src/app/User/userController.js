@@ -171,10 +171,10 @@ exports.getLikeArticleByUserId = async function (req, res) {
         return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
     }
 
-    const userLikeArticleByUseridResult = await userProvider.retrieveLikeArticleByUserId(userId);
+    const userLikeArticleByUserIdResult = await userProvider.retrieveLikeArticleByUserId(userId);
 
 
-    return res.send(userLikeArticleByUseridResult)
+    return res.send(userLikeArticleByUserIdResult)
 };
 
 
@@ -198,9 +198,9 @@ exports.patchLikeArticleStatusByUserId = async function (req, res) {
     }
 
 
-    const userLikeArticleStatusByUseridResult = await userService.editLikeArticleStatusByUserId(userId, articleId);
+    const userLikeArticleStatusByUserIdResult = await userService.editLikeArticleStatusByUserId(userId, articleId);
     // console.log(userLikeArticleStatusByUseridResult)
-    return res.send(userLikeArticleStatusByUseridResult)
+    return res.send(userLikeArticleStatusByUserIdResult)
 };
 
 
@@ -222,7 +222,7 @@ exports.getUserArticleByUserId = async function (req, res) {
         return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
     }
 
-    const userArticleByUseridResult = await userProvider.retrieveUserArticleByUserId(userId);
+    const userArticleByUserIdResult = await userProvider.retrieveUserArticleByUserId(userId);
 
-    return res.send(userArticleByUseridResult)
+    return res.send(userArticleByUserIdResult)
 };

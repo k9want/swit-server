@@ -25,4 +25,6 @@ module.exports = function (app) {
 
     //14. 내 모집글 조회
     app.get('/users/:userId/articles', jwtMiddleware, user.getUserArticleByUserId)
+
+
 };

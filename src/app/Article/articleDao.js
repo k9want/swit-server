@@ -1,4 +1,34 @@
-//1-1. 게시글 상세조회 (내용)
+//1-1(1) 조회수 관련해서 게시글 유무 판단
+async function selectArticleByArticleIdCheck(connection, articleId) {
+    const selectArticleByArticleIdCheckQuery = `select
+                                             a.id
+                                           from Article as a
+                                           where a.status != 'INACTIVE' and a.id = ?;`;
+    const [selectArticleByArticleIdCheckRow] = await connection.query(selectArticleByArticleIdCheckQuery, articleId);
+    return selectArticleByArticleIdCheckRow[0];
+}
+
+//1-1(2-1) 조회 테이블에 id있는지 없는지 (조회한 적이 있는지 없는지 판단하기 위해)
+async function selectViewByUserIdArticleIdCheck(connection, userIdFromJWT, articleId) {
+    const selectViewByUserIdArticleIdCheckQuery = `select
+                                                     v.id
+                                                   from View as v
+                                                   where v.status = 'ACTIVE' and v.userId = ? and v.articleId = ?;`;
+    const [selectViewByUserIdArticleIdCheckRow] = await connection.query(selectViewByUserIdArticleIdCheckQuery, [userIdFromJWT, articleId]);
+    return selectViewByUserIdArticleIdCheckRow[0];
+}
+
+//1-1(2-2) 만약 조회한적이 없다면 조회테이블에 해당 userId, articleId 생성(insert)
+async function insertViewByUserIdArticleId(connection, userIdFromJWT, articleId) {
+    const insertViewByUserIdArticleIdQuery = `INSERT INTO
+                                                     View (userId, articleId)
+                                                   VALUES (?, ?);`;
+    const [insertViewByUserIdArticleIdRow] = await connection.query(insertViewByUserIdArticleIdQuery, [userIdFromJWT, articleId]);
+    return insertViewByUserIdArticleIdRow[0];
+}
+
+
+//1-1(3). 게시글 상세조회 (내용)
 async function selectArticleByArticleId(connection,userIdFromJWT, articleId) {
     const selectArticleByArticleIdQuery = `select
                                              a.id as articleId,
@@ -106,8 +136,15 @@ async function selectArticlePopularByKindId(connection, kindId) {
 
 
 module.exports = {
+    //1-1(1) 게시글 유무 판단(조회수 때문)
+    selectArticleByArticleIdCheck,
 
-    //1-1. 게시글 상세조회 (내용)
+    //1-1(2-1) 조회테이블 유무 판단(조회한 적이 있는지 판단하기 위해)
+    selectViewByUserIdArticleIdCheck,
+    //1-1(2-2) 조회한적 없는경우 새로 insert
+    insertViewByUserIdArticleId,
+
+    //1-1(3) 게시글 상세조회 (내용)
     selectArticleByArticleId,
 
     //1-2(1) 게시글 댓글 개수

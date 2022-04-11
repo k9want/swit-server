@@ -2,7 +2,7 @@ const { pool } = require("../../../config/database");
 
 const articleDao = require("./articleDao");
 const baseResponse = require("../../../config/baseResponseStatus");
-const {response} = require("../../../config/response");
+const {response, errResponse} = require("../../../config/response");
 const res = require("express");
 
 
@@ -10,16 +10,38 @@ const res = require("express");
 // API 1-1 : 게시글 상세조회 (게시글 내용)
 exports.retrieveArticleByArticleId = async function (userIdFromJWT, articleId) {
     const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
 
-    const articleByArticleIdResult = await articleDao.selectArticleByArticleId(connection, userIdFromJWT, articleId);
+        // 우선 게시글 조회 1-1(1)
+        const articleByArticleIdCheck = await articleDao.selectArticleByArticleIdCheck(connection, articleId);
 
-    connection.release();
+        console.log(articleByArticleIdCheck)
+        //게시글 없으면 return
+        if (!articleByArticleIdCheck) {
+            return response(baseResponse.ARTICLE_BY_ARTICLEID_NOT_EXIST)
+        }
 
-    if (!articleByArticleIdResult.articleId) {
-        return response(baseResponse.ARTICLE_BY_ARTICLEID_NOT_EXIST)
+        //조회했는지 판단 1-1(2-1)
+        const viewByUserIdArticleIdCheck = await articleDao.selectViewByUserIdArticleIdCheck(connection, userIdFromJWT, articleId);
+
+        //조회한 적없으면 insert 1-1(2-2)
+        if (!viewByUserIdArticleIdCheck) {
+            await articleDao.insertViewByUserIdArticleId(connection, userIdFromJWT, articleId);
+        }
+
+        //게시글도 있고 조회 기록도 처리 끝났으면 게시글보여주기
+        const articleByArticleIdResult = await articleDao.selectArticleByArticleId(connection, userIdFromJWT, articleId);
+
+        await connection.commit();
+        return response(baseResponse.ARTICLE_BY_ARTICLEID_SUCCESS, articleByArticleIdResult);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release();
     }
-
-    return response(baseResponse.ARTICLE_BY_ARTICLEID_SUCCESS,articleByArticleIdResult);
 };
 
 

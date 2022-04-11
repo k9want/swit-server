@@ -16,7 +16,9 @@ module.exports = {
     USER_ARTICLE_NOT_EXIST : { "isSuccess": true, "code": 1107, "message": "유저가 작성한 모집글이 존재하지 않습니다." },
     USER_ARTICLE_BY_USERID_SUCCESS : { "isSuccess": true, "code": 1108, "message": "내 모집글 조회성공" },
     ARTICLE_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1109, "message": "모집글 상세조회 성공" },
-
+    ARTICLE_COMMENT_NOT_EXIST : { "isSuccess": true, "code": 1110, "message": "댓글이 존재하지 않습니다." },
+    ARTICLE_COMMENT_SUCCESS: { "isSuccess": true, "code": 1111, "message": "댓글 조회 성공" },
+    
     //2*** - Request error
     // User Response
     USER_USERID_EMPTY: { "isSuccess": false, "code": 2000, "message": '유저Id를 입력하세요.' },

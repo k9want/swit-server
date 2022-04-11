@@ -23,6 +23,26 @@ exports.retrieveArticleByArticleId = async function (userIdFromJWT, articleId) {
 };
 
 
+// API 1-2 : 게시글 상세조회 (댓글)
+exports.retrieveArticleCommentsByArticleId = async function (userIdFromJWT, articleId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+
+    //댓글 개수 - commentCount 1-2(1)
+    const articleCommentsCountResult = await articleDao.selectArticleCommentsCount(connection, articleId);
+    const commentCount = articleCommentsCountResult.commentCount
+
+    //댓글 개수가 0일경우에는 굳이 댓글들을 조회할 필요가 없기때문에
+    if (!commentCount) {
+        connection.release();
+        return response(baseResponse.ARTICLE_COMMENT_NOT_EXIST)
+    }
+
+    //댓글 조회 - 1-2(2)
+    const articleCommentsResult = await articleDao.selectArticleComments(connection, userIdFromJWT, articleId)
+    connection.release();
+
+    return response(baseResponse.ARTICLE_COMMENT_SUCCESS,{'commentCount': commentCount, "Comment" : articleCommentsResult});
+};
 
 
  // API 2 : 게시글 조회 (종류) - 최신순

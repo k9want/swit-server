@@ -6,7 +6,7 @@ const res = require("express");
 const userProvider = require("../User/userProvider");
 
 /**
- * API No. 1
+ * API No. 1-1
  * API Name : 게시글 상세조회 (게시글 내용)
  * [GET] /articles/:articleId
  */
@@ -25,6 +25,25 @@ exports.getArticlesByArticleId = async function (req, res) {
 };
 
 
+
+/**
+ * API No. 1-2
+ * API Name : 게시글 상세조회 (댓글)
+ * [GET] /articles/:articleId/comments
+ */
+exports.getArticleCommentsByArticleId = async function (req, res) {
+
+    const articleId = req.params.articleId;
+    const userIdFromJWT = req.verifiedToken.userId
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY))
+    }
+
+    const articleCommentsByUserIdResult = await articleProvider.retrieveArticleCommentsByArticleId(userIdFromJWT, articleId);
+
+    return res.send(articleCommentsByUserIdResult);
+};
 
 /**
  * API No. 2

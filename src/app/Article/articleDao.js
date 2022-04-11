@@ -26,6 +26,38 @@ async function selectArticleByArticleId(connection,userIdFromJWT, articleId) {
 }
 
 
+
+//1-2(1). 게시글 상세조회 (댓글개수)
+async function selectArticleCommentsCount(connection, articleId) {
+    const selectArticleCommentsCountQuery = `select
+                                               count(c.id) as commentCount
+                                             from Comment as c
+                                                    left join Article a on a.id = c.articleId
+                                             where c.status = 'ACTIVE' and c.articleId = ?;`;
+    const [selectArticleCommentsCountRow] = await connection.query(selectArticleCommentsCountQuery,  articleId);
+    return selectArticleCommentsCountRow[0];
+}
+
+
+
+//1-2(2). 게시글 상세조회 (댓글)
+async function selectArticleComments(connection, userIdFromJWT, articleId) {
+    const selectArticleCommentsQuery = `select
+                                          u.nickname,
+                                          date_format(c.createdAt, '%Y.%m.%d %H:%i') as createdAt,
+                                          c.description,
+                                          if(? = c.userId, 'Y', 'N') as commentEditable
+                                        from Comment as c
+                                        left join Article a on c.articleId = a.id
+                                        left join User u on c.userId = u.id
+                                        where c.status = 'ACTIVE' and c.articleId = ?
+                                        order by createdAt desc;
+
+    `;
+    const [selectArticleCommentsRow] = await connection.query(selectArticleCommentsQuery, [userIdFromJWT, articleId]);
+    return selectArticleCommentsRow;
+}
+
 //2. 게시글 조회 (종류) - 최신순
 async function selectArticleByKindId(connection, kindId) {
     const selectArticleByKindIdListQuery = `select
@@ -77,6 +109,11 @@ module.exports = {
 
     //1-1. 게시글 상세조회 (내용)
     selectArticleByArticleId,
+
+    //1-2(1) 게시글 댓글 개수
+    selectArticleCommentsCount,
+    //1-2(2) 게시글 댓글들 조회
+    selectArticleComments,
 
     //2. 게시글 조회(최신순)
     selectArticleByKindId,

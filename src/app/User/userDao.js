@@ -139,6 +139,27 @@ async function insertArticleByUserId(connection, insertArticleData) {
 
 }
 
+//16-1 모집글 수정 전 게시글이 유저것이 맞는지 확인
+async function selectArticleInfoCheck(connection, articleInfoCheckParams) {
+    const selectArticleInfoCheckQuery = `select
+                                           a.id
+                                         from Article as a
+                                         where a.status != 'INACTIVE' and a.userid = ? and a.id = ?;`
+
+    const [selectArticleInfoCheckRows] = await connection.query(selectArticleInfoCheckQuery, articleInfoCheckParams)
+    return selectArticleInfoCheckRows[0]
+
+}
+
+//16-2 유저것이 맞다면 수정
+async function patchArticleInfo(connection, patchArticleInfoData) {
+    const patchArticleInfoQuery = `UPDATE Article a SET a.title = ?, a.categoryId = ?, a.description = ?
+                                   WHERE a.id = ? and a.userId = ?;`
+
+    const [patchArticleInfoRow] = await connection.query(patchArticleInfoQuery, patchArticleInfoData)
+    return patchArticleInfoRow[0]
+
+}
 
 module.exports = {
 
@@ -165,5 +186,10 @@ module.exports = {
 
     //15. 모집글 등록
     insertArticleByUserId,
+
+    //16-1 모집글 수정 전 게시글이 유저의 것이 맞는지 체크
+    selectArticleInfoCheck,
+    //16-2 모집글 수정
+    patchArticleInfo,
 
 }

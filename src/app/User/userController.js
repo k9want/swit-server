@@ -270,3 +270,48 @@ exports.postArticleByUserId = async function (req, res) {
 
     return res.send(createArticleByUserIdResult)
 };
+
+/**
+ * API No. 16
+ * API Name : 내 모집글 수정
+ * [POST] /users/:userId/articles/:articleId/edit
+ */
+exports.patchArticleInfo = async function (req, res) {
+
+    const userId = req.params.userId;
+    const articleId = req.params.articleId;
+    const userIdFromJWT = req.verifiedToken.userId;
+    const { title, categoryId, description } = req.body;
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+    if (!title) {
+        return res.send(response(baseResponse.ARTICLE_TITLE_EMPTY));
+    }
+
+    if (!categoryId) {
+        return res.send(response(baseResponse.ARTICLE_CATEGORYID_EMPTY));
+    }
+
+    if (categoryId < 1 || categoryId > 4) {
+        return res.send(response(baseResponse.ARTICLE_CATEGORYID_WRONG));
+    }
+
+    if (!description) {
+        return res.send(response(baseResponse.ARTICLE_DESCRIPTION_EMPTY));
+    }
+
+    const editArticleInfoResult = await userService.editArticleInfo(userId, articleId, title, categoryId, description);
+
+    return res.send(editArticleInfoResult)
+};

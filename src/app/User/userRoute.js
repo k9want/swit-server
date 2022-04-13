@@ -20,7 +20,6 @@ module.exports = function (app) {
     //11. 내 관심글 조회
     app.get('/users/:userId/likes', jwtMiddleware, user.getLikeArticleByUserId)
 
-
     //13. 내 관심글 삭제
     app.patch('/users/:userId/likes/:articleId/status', jwtMiddleware, user.patchLikeArticleStatusByUserId)
 
@@ -30,4 +29,6 @@ module.exports = function (app) {
     //15. 내 모집글 등록
     app.post('/users/:userId/article', jwtMiddleware, user.postArticleByUserId)
 
+    //16. 내 모집글 수정
+    app.patch('/users/:userId/articles/:articleId/edit', jwtMiddleware, user.patchArticleInfo)
 };

@@ -179,7 +179,6 @@ exports.getLikeArticleByUserId = async function (req, res) {
 
 
 
-
 /**
  * API No. 13
  * API Name : 내 관심글 삭제
@@ -187,10 +186,16 @@ exports.getLikeArticleByUserId = async function (req, res) {
  */
 exports.patchLikeArticleStatusByUserId = async function (req, res) {
     const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
+
     const articleId = req.params.articleId;
 
     if (!userId) {
         return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
     }
 
     if (!articleId) {

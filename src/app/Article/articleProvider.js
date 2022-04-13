@@ -16,7 +16,7 @@ exports.retrieveArticleByArticleId = async function (userIdFromJWT, articleId) {
         // 우선 게시글 조회 1-1(1)
         const articleByArticleIdCheck = await articleDao.selectArticleByArticleIdCheck(connection, articleId);
 
-        console.log(articleByArticleIdCheck)
+        // console.log(articleByArticleIdCheck)
         //게시글 없으면 return
         if (!articleByArticleIdCheck) {
             return response(baseResponse.ARTICLE_BY_ARTICLEID_NOT_EXIST)

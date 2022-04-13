@@ -18,7 +18,8 @@ module.exports = {
     ARTICLE_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1109, "message": "모집글 상세조회 성공" },
     ARTICLE_COMMENT_NOT_EXIST : { "isSuccess": true, "code": 1110, "message": "댓글이 존재하지 않습니다." },
     ARTICLE_COMMENT_SUCCESS: { "isSuccess": true, "code": 1111, "message": "댓글 조회 성공" },
-    
+    ARTICLE_BY_USERID_SUCCESS: { "isSuccess": true, "code": 1112, "message": "모집글 등록 성공" },
+
     //2*** - Request error
     // User Response
     USER_USERID_EMPTY: { "isSuccess": false, "code": 2000, "message": '유저Id를 입력하세요.' },
@@ -32,7 +33,10 @@ module.exports = {
     KAKAOLOGIN_RETRY : { "isSuccess": false, code: 2011, "message": '카카오로그인 다시 시도해주세요' },
     ACCESS_CODE : { "isSuccess": false, "code": 2012, "message": "유효하지 않은 인가코드입니다." },
     ACCESS_TOKEN : { "isSuccess": false, "code": 2013, "message": "유효하지 않은 액세스토큰입니다" },
-
+    ARTICLE_TITLE_EMPTY : { "isSuccess": false, "code": 2014, "message": "title을 입력하세요" },
+    ARTICLE_CATEGORYID_EMPTY : { "isSuccess": false, "code": 2015, "message": "categoryId을 입력하세요" },
+    ARTICLE_DESCRIPTION_EMPTY : { "isSuccess": false, "code": 2016, "message": "description을 입력하세요" },
+    ARTICLE_CATEGORYID_WRONG : { "isSuccess": false, "code": 2017, "message": "categoryId는 1부터 4 중 하나입니다." },
 
     // Article Response
     ARTICLE_KINDID_EMPTY: {"isSuccess": false, "code": 2100, "message":'ArticleKindId를 입력해주세요'},

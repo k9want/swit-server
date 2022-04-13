@@ -129,6 +129,15 @@ async function selectUserArticleByUserId(connection, userId) {
 
 }
 
+//15. 모집글 등록
+async function insertArticleByUserId(connection, insertArticleData) {
+    const insertArticleByUserIdQuery = `INSERT INTO Article (userId, title, categoryId, description)
+                                            VALUES (?, ?, ?, ?);`
+
+    const [insertArticleByUserIdRows] = await connection.query(insertArticleByUserIdQuery, insertArticleData)
+    return insertArticleByUserIdRows
+
+}
 
 
 module.exports = {
@@ -153,5 +162,8 @@ module.exports = {
 
     //14. 내 모집글 조회
     selectUserArticleByUserId,
+
+    //15. 모집글 등록
+    insertArticleByUserId,
 
 }

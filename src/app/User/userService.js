@@ -82,3 +82,24 @@ exports.editLikeArticleStatusByUserId = async function (userId, articleId) {
     }
 
 };
+
+//15. 내 모집글 등록
+exports.createArticleByUserId = async function (userId, title, categoryId, description) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        const insertArticleData = [userId, title, categoryId, description]
+        await userDao.insertArticleByUserId(connection, insertArticleData)
+
+        await connection.commit()
+        return response(baseResponse.ARTICLE_BY_USERID_SUCCESS);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};

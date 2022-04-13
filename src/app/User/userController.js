@@ -178,7 +178,6 @@ exports.getLikeArticleByUserId = async function (req, res) {
 };
 
 
-
 /**
  * API No. 13
  * API Name : 내 관심글 삭제
@@ -230,4 +229,44 @@ exports.getUserArticleByUserId = async function (req, res) {
     const userArticleByUserIdResult = await userProvider.retrieveUserArticleByUserId(userId);
 
     return res.send(userArticleByUserIdResult)
+};
+
+/**
+ * API No. 15
+ * API Name : 내 모집글 등록
+ * [POST] /users/:userId/article
+ */
+exports.postArticleByUserId = async function (req, res) {
+
+    const userId = req.params.userId;
+    const userIdFromJWT = req.verifiedToken.userId
+    const { title, categoryId, description  } = req.body
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    if (!title) {
+        return res.send(response(baseResponse.ARTICLE_TITLE_EMPTY));
+    }
+
+    if (!categoryId) {
+        return res.send(response(baseResponse.ARTICLE_CATEGORYID_EMPTY));
+    }
+
+    if (categoryId < 1 || categoryId > 4) {
+        return res.send(response(baseResponse.ARTICLE_CATEGORYID_WRONG));
+    }
+
+    if (!description) {
+        return res.send(response(baseResponse.ARTICLE_DESCRIPTION_EMPTY));
+    }
+
+    const createArticleByUserIdResult = await userService.createArticleByUserId(userId, title, categoryId, description);
+
+    return res.send(createArticleByUserIdResult)
 };

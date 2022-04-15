@@ -34,4 +34,7 @@ module.exports = function (app) {
 
     //17. 내 모집글 삭제
     app.patch('/users/:userId/articles/:articleId/status', jwtMiddleware, user.patchArticleStatusByUserId)
+
+    //18. 유저 댓글 작성
+    app.post('/articles/:articleId/comment', jwtMiddleware, user.postCommentByArticleId)
 };

@@ -168,3 +168,35 @@ exports.editArticleStatusByUserId = async function (userId, articleId) {
     }
 
 };
+
+
+//18. 유저 댓글 작성
+exports.createCommentByArticleId = async function (userIdFromJWT, articleId, description) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        //18-1 댓글 쓸 게시글이 있는지 없는지 우선 체크
+        const articleCheckResult = await userDao.selectArticleCheck(connection, articleId);
+
+        //없다면? return
+        if (!articleCheckResult) {
+            return response(baseResponse.COMMENT_BY_ARTICLE_NOT_EXIST);
+        }
+
+        //있다면?
+        // 18-2 댓글 작성
+        const commentData = [userIdFromJWT, articleId, description]
+        await userDao.insertCommentByArticleId(connection, commentData);
+
+        await connection.commit();
+        return response(baseResponse.COMMENT_BY_ARTICLEID_SUCCESS);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};

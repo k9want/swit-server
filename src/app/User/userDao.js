@@ -172,6 +172,26 @@ async function patchArticleStatus(connection, userId, articleId) {
 
 }
 
+//18-1 댓글 쓸 게시글이 있는지 없는지 우선 체크
+async function selectArticleCheck(connection, articleId) {
+    const selectArticleCheckQuery = `select a.id
+                                     from Article as a
+                                     where a.id = ? and a.status != 'INACTIVE';`
+
+    const [selectArticleCheckRow] = await connection.query(selectArticleCheckQuery, articleId);
+    return selectArticleCheckRow[0]
+
+}
+
+//18-2 모집글이 있어서 댓글 작성
+async function insertCommentByArticleId(connection, commentData) {
+    const insertCommentByArticleIdQuery = `INSERT INTO Comment (userId, articleId, description)
+                                           VALUES (?, ?, ?);`
+
+    const [insertCommentByArticleIdRow] = await connection.query(insertCommentByArticleIdQuery, commentData);
+    return insertCommentByArticleIdRow[0]
+
+}
 
 
 module.exports = {
@@ -208,5 +228,10 @@ module.exports = {
     //17-1은 16-1과 같기 때문에 재사용
     //17-2 모집글 삭제
     patchArticleStatus,
+
+    //18-1 댓글을 작성할 모집글이 유무 판단 체크
+    selectArticleCheck,
+    //18-2 모집글이 있다면 댓글 작성
+    insertCommentByArticleId,
 
 }

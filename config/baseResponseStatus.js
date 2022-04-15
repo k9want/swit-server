@@ -21,6 +21,7 @@ module.exports = {
     ARTICLE_BY_USERID_SUCCESS: { "isSuccess": true, "code": 1112, "message": "모집글 등록 성공" },
     ARTICLE_INFO_EDIT_SUCCESS: { "isSuccess": true, "code": 1113, "message": "모집글 정보 수정 성공" },
     ARTICLE_STATUS_EDIT_SUCCESS: { "isSuccess": true, "code": 1114, "message": "모집글 수정(삭제) 성공" },
+    COMMENT_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1115, "message": "댓글 작성 성공" },
 
 
 
@@ -45,7 +46,7 @@ module.exports = {
     // Article Response
     ARTICLE_KINDID_EMPTY: {"isSuccess": false, "code": 2100, "message":'ArticleKindId를 입력해주세요'},
     ARTICLE_KINDID_NOT_EXIST: {"isSuccess": false, "code": 2101, "message":'ArticleKindId를 확인해주세요'},
-
+    COMMENT_DESCRIPTION_EMPTY : {"isSuccess": false, "code": 2102, "message":'댓글 내용(description)을 입력하세요'},
 
 
 
@@ -54,9 +55,9 @@ module.exports = {
     USER_BY_USERID_NOT_EXIST: {"isSuccess": false, "code": 3002, "message": '해당 유저가 존재하지 않습니다.'},
     ARTICLE_BY_ARTICLEID_WRONG: {"isSuccess": false, "code": 3002, "message": '해당 유저가 존재하지 않습니다.'},
     ARTICLE_BY_ARTICLEID_NOT_EXIST: {"isSuccess": false, "code": 3003, "message":'해당 articleId로 조회되는 모집글이 없습니다.(상세조회 실패)'},
-    ARTICLE_INFO_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3004, "message": '수정할 게시글이 없습니다. userId와 articleId를 확인해주세요 '},
-    ARTICLE_STATUS_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3005, "message": '삭제할 게시글이 없습니다. userId와 articleId를 확인해주세요 '},
-
+    ARTICLE_INFO_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3004, "message": '수정할 모집글이 없습니다. userId와 articleId를 확인해주세요 '},
+    ARTICLE_STATUS_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3005, "message": '삭제할 모집글이 없습니다. userId와 articleId를 확인해주세요 '},
+    COMMENT_BY_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3006, "message": '댓글을 작성할 모집글이 없습니다. articleId를 확인해주세요 '},
 
 
     //4 ******

@@ -274,7 +274,7 @@ exports.postArticleByUserId = async function (req, res) {
 /**
  * API No. 16
  * API Name : 내 모집글 수정
- * [POST] /users/:userId/articles/:articleId/edit
+ * [PATCH] /users/:userId/articles/:articleId/edit
  */
 exports.patchArticleInfo = async function (req, res) {
 
@@ -320,7 +320,7 @@ exports.patchArticleInfo = async function (req, res) {
 /**
  * API No. 17
  * API Name : 내 모집글 삭제
- * [POST] /users/:userId/articles/:articleId/status
+ * [PATCH] /users/:userId/articles/:articleId/status
  */
 exports.patchArticleStatusByUserId = async function (req, res) {
     const userId = req.params.userId;
@@ -343,4 +343,28 @@ exports.patchArticleStatusByUserId = async function (req, res) {
 
     return res.send(editArticleStatusByUserIdResult)
 
+};
+
+
+/**
+ * API No. 18
+ * API Name : 유저 댓글 작성
+ * [POST] /articles/:articleId/comment
+ */
+exports.postCommentByArticleId = async function (req, res) {
+    const userIdFromJWT = req.verifiedToken.userId;
+    const articleId = req.params.articleId;
+    const { description } = req.body
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+    if (!description) {
+        return res.send(response(baseResponse.COMMENT_DESCRIPTION_EMPTY));
+    }
+
+    const createCommentByArticleIdResult = await userService.createCommentByArticleId(userIdFromJWT, articleId, description);
+
+    return res.send(createCommentByArticleIdResult)
 };

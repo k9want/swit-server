@@ -135,3 +135,36 @@ exports.editArticleInfo = async function (userId, articleId, title, categoryId, 
     }
 
 };
+
+
+
+
+//17. 내 모집글 삭제
+exports.editArticleStatusByUserId = async function (userId, articleId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        //16-1 (=17-1) 우선 해당 게시글이 존재하는지 그리고 유저것이 맞는지 판단
+        const articleInfoCheckParams = [userId, articleId]
+        const articleInfoCheckResult = await userDao.selectArticleInfoCheck(connection, articleInfoCheckParams)
+
+        // console.log(articleInfoCheckResult)
+        if (!articleInfoCheckResult) {
+            return response(baseResponse.ARTICLE_STATUS_EDIT_NOT_EXIST);
+        }
+
+        //17-2 모집글 수정
+        await userDao.patchArticleStatus(connection, userId, articleId);
+
+        await connection.commit();
+        return response(baseResponse.ARTICLE_STATUS_EDIT_SUCCESS);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};

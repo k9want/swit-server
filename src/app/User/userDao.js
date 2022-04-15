@@ -139,7 +139,7 @@ async function insertArticleByUserId(connection, insertArticleData) {
 
 }
 
-//16-1 모집글 수정 전 게시글이 유저것이 맞는지 확인
+//16-1(=17-1) 모집글 수정 전 게시글이 유저것이 맞는지 확인
 async function selectArticleInfoCheck(connection, articleInfoCheckParams) {
     const selectArticleInfoCheckQuery = `select
                                            a.id
@@ -160,6 +160,19 @@ async function patchArticleInfo(connection, patchArticleInfoData) {
     return patchArticleInfoRow[0]
 
 }
+
+//17-1 (=16-1)과 같기 때문에 재사용
+//17-2 유저것이 맞다면 삭제 (수정 => statua = 'INACTIVE')
+async function patchArticleStatus(connection, userId, articleId) {
+    const patchArticleStatusQuery = `UPDATE Article a SET a.status = 'INACTIVE'
+                                     WHERE a.userId = ? and a.id = ?;`
+
+    const [patchArticleStatusRow] = await connection.query(patchArticleStatusQuery, [userId, articleId])
+    return patchArticleStatusRow[0]
+
+}
+
+
 
 module.exports = {
 
@@ -187,9 +200,13 @@ module.exports = {
     //15. 모집글 등록
     insertArticleByUserId,
 
-    //16-1 모집글 수정 전 게시글이 유저의 것이 맞는지 체크
+    //16-1(=17-1) 모집글 수정 전 게시글이 유저의 것이 맞는지 체크
     selectArticleInfoCheck,
     //16-2 모집글 수정
     patchArticleInfo,
+
+    //17-1은 16-1과 같기 때문에 재사용
+    //17-2 모집글 삭제
+    patchArticleStatus,
 
 }

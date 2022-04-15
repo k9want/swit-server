@@ -315,3 +315,32 @@ exports.patchArticleInfo = async function (req, res) {
 
     return res.send(editArticleInfoResult)
 };
+
+
+/**
+ * API No. 17
+ * API Name : 내 모집글 삭제
+ * [POST] /users/:userId/articles/:articleId/status
+ */
+exports.patchArticleStatusByUserId = async function (req, res) {
+    const userId = req.params.userId;
+    const articleId = req.params.articleId;
+    const userIdFromJWT = req.verifiedToken.userId;
+
+    if (!userId) {
+        return res.send(response(baseResponse.USER_USERID_EMPTY));
+    }
+
+    if (userIdFromJWT != userId) {
+        return res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    }
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+    const editArticleStatusByUserIdResult = await userService.editArticleStatusByUserId(userId, articleId);
+
+    return res.send(editArticleStatusByUserIdResult)
+
+};

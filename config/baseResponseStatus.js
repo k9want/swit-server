@@ -22,6 +22,7 @@ module.exports = {
     ARTICLE_INFO_EDIT_SUCCESS: { "isSuccess": true, "code": 1113, "message": "모집글 정보 수정 성공" },
     ARTICLE_STATUS_EDIT_SUCCESS: { "isSuccess": true, "code": 1114, "message": "모집글 수정(삭제) 성공" },
     COMMENT_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1115, "message": "댓글 작성 성공" },
+    COMMENT_INFO_EDIT_SUCCESS: { "isSuccess": true, "code": 1116, "message": "댓글 수정 성공" },
 
 
 
@@ -47,7 +48,7 @@ module.exports = {
     ARTICLE_KINDID_EMPTY: {"isSuccess": false, "code": 2100, "message":'ArticleKindId를 입력해주세요'},
     ARTICLE_KINDID_NOT_EXIST: {"isSuccess": false, "code": 2101, "message":'ArticleKindId를 확인해주세요'},
     COMMENT_DESCRIPTION_EMPTY : {"isSuccess": false, "code": 2102, "message":'댓글 내용(description)을 입력하세요'},
-
+    COMMENT_COMMENTID_EMPTY: {"isSuccess": false, "code": 2103, "message":'commentId을 입력하세요'},
 
 
     //3*** - Response error
@@ -58,6 +59,8 @@ module.exports = {
     ARTICLE_INFO_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3004, "message": '수정할 모집글이 없습니다. userId와 articleId를 확인해주세요 '},
     ARTICLE_STATUS_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3005, "message": '삭제할 모집글이 없습니다. userId와 articleId를 확인해주세요 '},
     COMMENT_BY_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3006, "message": '댓글을 작성할 모집글이 없습니다. articleId를 확인해주세요 '},
+    COMMENT_EDIT_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3007, "message": '댓글을 수정할 모집글이 없습니다. articleId를 확인해주세요 '},
+    COMMENT_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3008, "message": '수정할 댓글이 없습니다.'},
 
 
     //4 ******

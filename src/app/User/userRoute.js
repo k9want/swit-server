@@ -37,4 +37,7 @@ module.exports = function (app) {
 
     //18. 유저 댓글 작성
     app.post('/articles/:articleId/comment', jwtMiddleware, user.postCommentByArticleId)
+
+    //19. 댓글 수정
+    app.patch('/articles/:articleId/comments/:commentId/edit', jwtMiddleware, user.patchCommentByCommentId)
 };

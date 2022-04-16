@@ -368,3 +368,33 @@ exports.postCommentByArticleId = async function (req, res) {
 
     return res.send(createCommentByArticleIdResult)
 };
+
+
+
+/**
+ * API No. 19
+ * API Name : 유저 댓글 수정
+ * [PATCH] /articles/:articleId/comments/:commentId/edit
+ */
+exports.patchCommentByCommentId = async function (req, res) {
+    const userIdFromJWT = req.verifiedToken.userId;
+    const articleId = req.params.articleId;
+    const commentId = req.params.commentId;
+    const { description } = req.body
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+    if (!commentId) {
+        return res.send(response(baseResponse.COMMENT_COMMENTID_EMPTY))
+    }
+
+    if (!description) {
+        return res.send(response(baseResponse.COMMENT_DESCRIPTION_EMPTY));
+    }
+
+    const editCommentInfoResult = await userService.editCommentInfo(userIdFromJWT, articleId, commentId, description);
+
+    return res.send(editCommentInfoResult)
+};

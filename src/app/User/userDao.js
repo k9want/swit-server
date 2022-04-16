@@ -194,6 +194,29 @@ async function insertCommentByArticleId(connection, commentData) {
 }
 
 
+//19-1 (=18-1)
+//19-2 삭제된 댓글이 아닌지 그리고 댓글이 수정하려는 유저의 것이 맞는지 판단
+async function selectCommentCheck(connection, commentCheckData) {
+    const selectCommentCheckQuery = `select
+                                       c.id
+                                     from Comment as c
+                                     where c.status = 'ACTIVE' and c.userId = ? and c.articleId = ? and c.id = ?;`
+
+    const [selectCommentCheckRow] = await connection.query(selectCommentCheckQuery, commentCheckData);
+    return selectCommentCheckRow[0]
+
+}
+
+//19-3 댓글 수정
+async function updateCommentInfo(connection, commentData) {
+    const updateCommentInfoQuery = `UPDATE Comment c SET c.description = ?
+                                     WHERE c.userId = ? and c.articleId = ? and c.id = ? and c.status = 'ACTIVE';`
+
+    const [updateCommentInfoRow] = await connection.query(updateCommentInfoQuery, commentData);
+    return updateCommentInfoRow[0]
+
+}
+
 module.exports = {
 
     //6-1 유저 회원인지 체크
@@ -233,5 +256,12 @@ module.exports = {
     selectArticleCheck,
     //18-2 모집글이 있다면 댓글 작성
     insertCommentByArticleId,
+
+
+    //19-1 (=18-1)
+    //19-2 삭제된 댓글이 아닌지 그리고 댓글이 수정하려는 유저의 것이 맞는지 판단
+    selectCommentCheck,
+    //19-3 댓글 수정
+    updateCommentInfo,
 
 }

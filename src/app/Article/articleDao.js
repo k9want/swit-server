@@ -81,7 +81,7 @@ async function selectArticleComments(connection, userIdFromJWT, articleId) {
                                         left join Article a on c.articleId = a.id
                                         left join User u on c.userId = u.id
                                         where c.status = 'ACTIVE' and c.articleId = ?
-                                        order by createdAt desc;
+                                        order by createdAt asc;
 
     `;
     const [selectArticleCommentsRow] = await connection.query(selectArticleCommentsQuery, [userIdFromJWT, articleId]);

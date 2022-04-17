@@ -73,6 +73,7 @@ async function selectArticleCommentsCount(connection, articleId) {
 //1-2(2). 게시글 상세조회 (댓글)
 async function selectArticleComments(connection, userIdFromJWT, articleId) {
     const selectArticleCommentsQuery = `select
+                                          c.id as commentId,
                                           u.nickname,
                                           date_format(c.createdAt, '%Y.%m.%d %H:%i') as createdAt,
                                           c.description,

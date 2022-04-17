@@ -23,6 +23,7 @@ module.exports = {
     ARTICLE_STATUS_EDIT_SUCCESS: { "isSuccess": true, "code": 1114, "message": "모집글 수정(삭제) 성공" },
     COMMENT_BY_ARTICLEID_SUCCESS: { "isSuccess": true, "code": 1115, "message": "댓글 작성 성공" },
     COMMENT_INFO_EDIT_SUCCESS: { "isSuccess": true, "code": 1116, "message": "댓글 수정 성공" },
+    COMMENT_STATUS_SUCCESS: { "isSuccess": true, "code": 1117, "message": "댓글 삭제 성공" },
 
 
 
@@ -61,6 +62,9 @@ module.exports = {
     COMMENT_BY_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3006, "message": '댓글을 작성할 모집글이 없습니다. articleId를 확인해주세요 '},
     COMMENT_EDIT_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3007, "message": '댓글을 수정할 모집글이 없습니다. articleId를 확인해주세요 '},
     COMMENT_EDIT_NOT_EXIST : {"isSuccess": false, "code": 3008, "message": '수정할 댓글이 없습니다.'},
+    COMMENT_STATUS_ARTICLE_NOT_EXIST : {"isSuccess": false, "code": 3009, "message": '댓글을 삭제할 모집글이 없습니다. articleId를 확인해주세요 '},
+    COMMENT_STATUS_NOT_EXIST : {"isSuccess": false, "code": 3010, "message": '삭제할 댓글이 없습니다.'},
+
 
 
     //4 ******

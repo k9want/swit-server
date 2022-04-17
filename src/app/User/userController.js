@@ -398,3 +398,28 @@ exports.patchCommentByCommentId = async function (req, res) {
 
     return res.send(editCommentInfoResult)
 };
+
+
+
+/**
+ * API No. 20
+ * API Name : 댓글 삭제
+ * [PATCH] /articles/:articleId/comments/:commentId/status
+ */
+exports.patchCommentStatusByCommentId = async function (req, res) {
+    const userIdFromJWT = req.verifiedToken.userId;
+    const articleId = req.params.articleId;
+    const commentId = req.params.commentId;
+
+    if (!articleId) {
+        return res.send(response(baseResponse.ARTICLE_ARTICLEID_EMPTY));
+    }
+
+    if (!commentId) {
+        return res.send(response(baseResponse.COMMENT_COMMENTID_EMPTY))
+    }
+
+    const editCommentStatusResult = await userService.editCommentStatus(userIdFromJWT, articleId, commentId);
+
+    return res.send(editCommentStatusResult)
+};

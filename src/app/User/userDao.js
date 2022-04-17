@@ -217,6 +217,19 @@ async function updateCommentInfo(connection, commentData) {
 
 }
 
+
+//20-3 댓글 삭제
+async function updateCommentStatus(connection, commentData) {
+    const updateCommentStatusQuery = `UPDATE Comment c SET c.status = 'INACTIVE'
+                                      WHERE c.userId = ? and c.articleId = ? and c.id = ? and c.status = 'ACTIVE';`
+
+    const [updateCommentStatusRow] = await connection.query(updateCommentStatusQuery, commentData);
+    return updateCommentStatusRow[0]
+
+}
+
+
+
 module.exports = {
 
     //6-1 유저 회원인지 체크
@@ -263,5 +276,9 @@ module.exports = {
     selectCommentCheck,
     //19-3 댓글 수정
     updateCommentInfo,
+
+    //20-1, 20-2 (=19-1, 19-2)
+    //20-3 댓글 삭제
+    updateCommentStatus,
 
 }

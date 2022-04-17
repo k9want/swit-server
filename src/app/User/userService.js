@@ -240,3 +240,42 @@ exports.editCommentInfo = async function (userIdFromJWT, articleId, commentId, d
     }
 
 };
+
+//19. 댓글 수정
+exports.editCommentStatus = async function (userIdFromJWT, articleId, commentId) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    try {
+        await connection.beginTransaction();
+
+        //19-1(=18-1) 댓글 수정할 모집글이 있는지 없는지 우선 체크
+        const articleCheckResult = await userDao.selectArticleCheck(connection, articleId);
+
+        //없다면? return
+        if (!articleCheckResult) {
+            return response(baseResponse.COMMENT_STATUS_ARTICLE_NOT_EXIST);
+        }
+
+        //19-2 해당 댓글이 있는지 그리고 해당 유저의 댓글이 맞는지 판단.
+        const commentCheckData = [userIdFromJWT, articleId, commentId];
+        const commentCheckResult = await userDao.selectCommentCheck(connection, commentCheckData)
+
+        if (!commentCheckResult) {
+            return response(baseResponse.COMMENT_STATUS_NOT_EXIST);
+        }
+
+        //있다면?
+        // 19-3 댓글 삭제
+        const commentData = [userIdFromJWT, articleId, commentId];
+        await userDao.updateCommentStatus(connection, commentData);
+
+        await connection.commit();
+        return response(baseResponse.COMMENT_STATUS_SUCCESS);
+    } catch (e) {
+        console.log(e)
+        await connection.rollback();
+        return errResponse(baseResponse.DB_ERROR)
+    } finally {
+        connection.release()
+    }
+
+};

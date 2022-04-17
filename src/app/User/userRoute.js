@@ -40,4 +40,7 @@ module.exports = function (app) {
 
     //19. 댓글 수정
     app.patch('/articles/:articleId/comments/:commentId/edit', jwtMiddleware, user.patchCommentByCommentId)
+
+    //20. 댓글 삭제
+    app.patch('/articles/:articleId/comments/:commentId/status', jwtMiddleware, user.patchCommentStatusByCommentId)
 };
